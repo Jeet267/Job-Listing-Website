@@ -1,0 +1,95 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  position: relative;
+  height: 150px;
+}
+
+.bg-header-desktop, .bg-header-mobile {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.container {
+  padding: 20px;
+}
+
+.job {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  
+}
+
+.temp{
+  display: flex;
+}
+
+.logo img {
+  max-width: 100px;
+}
+
+.job-details {
+  margin-left: 20px;
+  
+}
+
+.company-info {
+  display: flex;
+  align-items: center;
+}
+
+.company-info h2 {
+  margin-right: 10px;
+}
+
+.company-info span{
+  border-radius: 30px;
+}
+
+.new, .featured {
+  font-weight: bold;
+  padding: 5px 10px;
+  margin-right: 5px;
+}
+
+.new {
+  background-color: #4caf50;
+  color: white;
+}
+
+.featured {
+  background-color: #ff9800;
+  color: white;
+}
+
+.tags {
+  margin-top: 10px;
+}
+
+.tags span {
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+.meta{
+display: flex;
+list-style: none;
+justify-content: space-between;
+padding-left: 0;
+color: grey;
+}
