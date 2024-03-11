@@ -1,189 +1,148 @@
-const jobsData={
-  jobs : [{
-    "id": 1,
-    "company": "Photosnap",
-    "logo": "https://d3dyfaf3iutrxo.cloudfront.net/general/upload/d1b1de43ca6a441e99543d80eb517d34.svg",
-    "new": true,
-    "featured": true,
-    "position": "Senior Frontend Developer",
-    "role": "Frontend",
-    "level": "Senior",
-    "postedAt": "1d ago",
-    "contract": "Full Time",
-    "location": "USA Only",
-    "languages": ["HTML", "CSS", "JavaScript"],
-    "tools": []
-  },
-  {
-    "id": 2,
-    "company": "Manage",
-    "logo": "https://d3dyfaf3iutrxo.cloudfront.net/general/upload/be5619415553470faca94f94f72b6e68.svg",
-    "new": true,
-    "featured": true,
-    "position": "Fullstack Developer",
-    "role": "Fullstack",
-    "level": "Midweight",
-    "postedAt": "1d ago",
-    "contract": "Part Time",
-    "location": "Remote",
-    "languages": ["Python"],
-    "tools": ["React"]
-  },
-  {
-    "id": 3,
-    "company": "Account",
-    "logo": "https://d3dyfaf3iutrxo.cloudfront.net/general/upload/c245c838322e4ebdae5692c9d9a8bdbe.svg",
-    "new": true,
-    "featured": false,
-    "position": "Junior Frontend Developer",
-    "role": "Frontend",
-    "level": "Junior",
-    "postedAt": "2d ago",
-    "contract": "Part Time",
-    "location": "USA Only",
-    "languages": ["JavaScript"],
-    "tools": ["React", "Sass"]
-  },
-  {
-    "id": 4,
-    "company": "MyHome",
-    "logo": "https://d3dyfaf3iutrxo.cloudfront.net/general/upload/cd85fb2d60f04ea7aea3ed183a37a607.svg",
-    "new": false,
-    "featured": false,
-    "position": "Junior Frontend Developer",
-    "role": "Frontend",
-    "level": "Junior",
-    "postedAt": "5d ago",
-    "contract": "Contract",
-    "location": "USA Only",
-    "languages": ["CSS", "JavaScript"],
-    "tools": []
-  },
-  {
-    "id": 5,
-    "company": "Loop Studios",
-    "logo": "https://d3dyfaf3iutrxo.cloudfront.net/general/upload/a4cd5572845541adb89e962794ca86fe.svg",
-    "new": false,
-    "featured": false,
-    "position": "Software Engineer",
-    "role": "Fullstack",
-    "level": "Midweight",
-    "postedAt": "1w ago",
-    "contract": "Full Time",
-    "location": "Worldwide",
-    "languages": ["JavaScript", "Ruby"],
-    "tools": ["Sass"]
-  },
-  {
-    "id": 6,
-    "company": "FaceIt",
-    "logo": "https://d3dyfaf3iutrxo.cloudfront.net/general/upload/e8c50754b72f43f6a3eefd188acdac7c.svg",
-    "new": false,
-    "featured": false,
-    "position": "Junior Backend Developer",
-    "role": "Backend",
-    "level": "Junior",
-    "postedAt": "2w ago",
-    "contract": "Full Time",
-    "location": "UK Only",
-    "languages": ["Ruby"],
-    "tools": ["RoR"]
-  },
-  {
-    "id": 7,
-    "company": "Shortly",
-    "logo": "https://d3dyfaf3iutrxo.cloudfront.net/general/upload/96e8d27ab40b4015a59e589687dd177d.svg",
-    "new": false,
-    "featured": false,
-    "position": "Junior Developer",
-    "role": "Frontend",
-    "level": "Junior",
-    "postedAt": "2w ago",
-    "contract": "Full Time",
-    "location": "Worldwide",
-    "languages": ["HTML", "JavaScript"],
-    "tools": ["Sass"]
-  },
-  {
-    "id": 8,
-    "company": "Insure",
-    "logo": "https://d3dyfaf3iutrxo.cloudfront.net/general/upload/2dd17882e68d4045a18eab7dfb9c37de.svg",
-    "new": false,
-    "featured": false,
-    "position": "Junior Frontend Developer",
-    "role": "Frontend",
-    "level": "Junior",
-    "postedAt": "2w ago",
-    "contract": "Full Time",
-    "location": "USA Only",
-    "languages": ["JavaScript"],
-    "tools": ["Vue", "Sass"]
-  },
-  {
-    "id": 9,
-    "company": "Eyecam Co.",
-    "logo": "https://d3dyfaf3iutrxo.cloudfront.net/general/upload/68e12689f98740ddaa1f4a78bc2d4f7c.svg",
-    "new": false,
-    "featured": false,
-    "position": "Full Stack Engineer",
-    "role": "Fullstack",
-    "level": "Midweight",
-    "postedAt": "3w ago",
-    "contract": "Full Time",
-    "location": "Worldwide",
-    "languages": ["JavaScript", "Python"],
-    "tools": ["Django"]
-  },
-  {
-    "id": 10,
-    "company": "The Air Filter Company",
-    "logo": "https://d3dyfaf3iutrxo.cloudfront.net/general/upload/db318fbeb51d41b6bc9388259899e297.svg",
-    "new": false,
-    "featured": false,
-    "position": "Front-end Dev",
-    "role": "Frontend",
-    "level": "Junior",
-    "postedAt": "1mo ago",
-    "contract": "Part Time",
-    "location": "Worldwide",
-    "languages": ["JavaScript"],
-    "tools": ["React", "Sass"]
+const filter = document.querySelector(".filter-sub");
+const main = document.querySelector("main");
+const clear = document.querySelector(".clear");
+const header = document.querySelector("header");
+let closes = [];
+let arr = [];
+(async function () {
+  let res = await fetch("./data.json");
+  let data = await res.json();
+  for (let curr of data) {
+    const container = document.createElement("div");
+    container.classList.add("container");
+    container.innerHTML = `
+      <img src="${curr.logo}" alt="logo" />
+      <div class="head">
+        <div class="wrapper">
+          <div class="top">
+            <h2>${curr.company}</h2>
+            <div class="stat"></div>
+          </div>
+          <a href="#">${curr.position}</a>
+          <ul class="availability">
+            <li>${curr.postedAt}</li>
+            <li>${curr.contract}</li>
+            <li>${curr.location}</li>
+          </ul>
+        </div>
+        <hr />
+        <div class="tags"></div>
+      </div>
+    `;
+    if (curr.new) {
+      const span = document.createElement("span");
+      span.classList.add("new");
+      span.textContent = "New!";
+      container.querySelector(".stat").append(span);
+    }
+    if (curr.featured) {
+      container.classList.add("featured");
+      const span = document.createElement("span");
+      span.classList.add("feature");
+      span.textContent = "Featured";
+      container.querySelector(".stat").append(span);
+    }
+    let types = curr.position.split(" ");
+    const btn1 = document.createElement("button");
+    btn1.dataset.type = curr.role;
+    btn1.textContent = curr.role;
+    container.querySelector(".tags").appendChild(btn1);
+    const btn2 = document.createElement("button");
+    btn2.dataset.type = curr.level;
+    btn2.textContent = curr.level;
+    container.querySelector(".tags").appendChild(btn2);
+    for (let l of curr.languages) {
+      const btn = document.createElement("button");
+      btn.dataset.type = l;
+      btn.textContent = l;
+      container.querySelector(".tags").appendChild(btn);
+    }
+    for (let t of curr.tools) {
+      const btn = document.createElement("button");
+      btn.dataset.type = t;
+      btn.textContent = t;
+      container.querySelector(".tags").appendChild(btn);
+    }
+    main.appendChild(container);
   }
-],
-  bg_header_desktop:"https://d3dyfaf3iutrxo.cloudfront.net/general/upload/7caa466cbd3c4975b9e39ec6700b1656.svg",
-  bg_header_mobile:"https://d3dyfaf3iutrxo.cloudfront.net/general/upload/ba3bba082bbf4cfb9232732eeca4206d.svg",
-  icon_remove:"https://d3dyfaf3iutrxo.cloudfront.net/general/upload/05c800be8f0b4d569e908f1aa949feed.svg",
-}
-
-const jobsListContainer = document.querySelector('.jobs-list');
-
-jobsData.jobs.forEach(job => {
-  const jobElement = document.createElement('div');
-  jobElement.classList.add('job');
-  jobElement.innerHTML = `
-  <div class = "temp">
-    <div class="logo">
-      <img src="${job.logo}" alt="${job.company} Logo">
-    </div>
-    <div class="job-details">
-      
-      <div class="company-info">
-        <h2>${job.company}</h2>
-        ${job.new ? '<span class="new">New!</span>' : ''}
-        ${job.featured ? '<span class="featured">Featured</span>' : ''}
-      </div>
-      <h1>${job.position}</h1>
-      <ul class="meta">
-        <li>${job.postedAt}</li>
-        <li>${job.contract}</li>
-        <li>${job.location}</li>
-      </ul>
-      </div>
-    </div>
-    <div class="tags">
-        ${job.languages.map(language => `<span>${language}</span>`).join('')}
-        ${job.tools.map(tool => `<span>${tool}</span>`).join('')}
-      </div>
-  `;
-  jobsListContainer.appendChild(jobElement);
+  const buttons = main.querySelectorAll(".tags button");
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      filterType(button.dataset.type);
+      updateContainer();
+    });
+  });
+})();
+clear.addEventListener("click", () => {
+  arr = [];
+  filter.innerHTML = "";
+  main
+    .querySelectorAll(".container")
+    .forEach((container) => container.classList.remove("remove"));
+  filter.closest(".filter").style.display = "none";
 });
+function addFilter() {
+  filter.innerHTML = "";
+  for (let i of arr) {
+    const el = document.createElement("div");
+    el.classList.add("span");
+    el.innerHTML = `
+      <p>${i}</p>
+      <button aria-label="remove button">
+        <img src="http://www.w3.org/2000/svg" width="14" height="14"><path fill="#FFF" fill-rule="evenodd" d="M11.314 0l2.121 2.121-4.596 4.596 4.596 4.597-2.121 2.121-4.597-4.596-4.596 4.596L0 11.314l4.596-4.597L0 2.121 2.121 0l4.596 4.596L11.314 0z" alt="remove" />
+      </button>
+    `;
+    filter.appendChild(el);
+    filter.closest(".filter").style.display = "flex";
+    closes = [];
+    closes.push(el.querySelector("button"));
+    closes.forEach((close) => {
+      close.addEventListener("click", () => {
+        filter.removeChild(close.closest(".span"));
+        arr.splice(arr.indexOf(close.previousElementSibling.textContent), 1);
+        updateContainer();
+        if (filter.innerHTML) {
+          filter.closest(".filter").style.display = "flex";
+        } else {
+          filter.closest(".filter").style.display = "none";
+        }
+      });
+    });
+  }
+}
+function filterType(type) {
+  if (!arr.includes(type)) {
+    arr.push(type);
+    addFilter();
+  }
+}
+function updateContainer() {
+  const containers = main.querySelectorAll(".container");
+  containers.forEach((container) => {
+    const buttons = container.querySelectorAll("button");
+    let check = [];
+    for (let i of buttons) {
+      check.push(i.dataset.type);
+    }
+    let include = true;
+    for (let j of arr) {
+      if (!check.includes(j)) {
+        include = false;
+      }
+    }
+    if (!include) {
+      container.classList.add("remove");
+    } else {
+      container.classList.remove("remove");
+    }
+  });
+}
+function changeBg() {
+  if (document.body.clientWidth < 700) {
+    header.style["background-image"] = "url(images/bg-header-mobile.svg)";
+  } else {
+    header.style["background-image"] = "url(images/bg-header-desktop.svg)";
+  }
+}
+changeBg();
+window.onresize = changeBg;
